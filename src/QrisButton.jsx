@@ -1,34 +1,46 @@
 // src/QrisButton.jsx
 import { useState } from "react";
+import qrImage from "./assets/qris.jpg"; // Import the image
 
 const QrisButton = () => {
   const [showQR, setShowQR] = useState(false);
 
-  const handlePayClick = () => {
+  const handleShowQR = () => {
     setShowQR(true);
   };
 
   return (
     <div style={styles.container}>
-      <div style={styles.content}>
-        <h1 style={styles.title}>QRIS Payment</h1>
-        <button
-          onClick={handlePayClick}
-          style={styles.button}
-        >
-          Pay
-        </button>
-        {showQR && (
-          <div style={styles.qrContainer}>
-            <h2 style={styles.subtitle}>Scan this QR Code to Pay</h2>
-            <img
-              src='https://pbs.twimg.com/media/EjDJnA1UwAAtWvg?format=jpg&name=small'
-              alt='QRIS Code'
-              style={styles.qrImage}
-            />
+      {showQR ? (
+        <div style={styles.qrContainer}>
+          {/* Display the static QR image */}
+          <img
+            src={qrImage}
+            alt='QRIS Code'
+            style={styles.qrImage}
+          />
+          <div style={styles.amountContainer}>
+            <span style={styles.currency}>Rp</span>
+            <span style={styles.amount}>5.000</span>
+            <button
+              onClick={() => setShowQR(false)}
+              style={styles.clearButton}
+            >
+              &times;
+            </button>
           </div>
-        )}
-      </div>
+          <p style={styles.footerText}>
+            Ask friends to scan the QR code or you can add the amount first too.
+          </p>
+        </div>
+      ) : (
+        <button
+          onClick={handleShowQR}
+          style={styles.generateButton}
+        >
+          Show QRIS
+        </button>
+      )}
     </div>
   );
 };
@@ -36,47 +48,65 @@ const QrisButton = () => {
 const styles = {
   container: {
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "column",
     alignItems: "center",
-    height: "100vh",
-    backgroundColor: "#333",
-  },
-  content: {
+    justifyContent: "center",
+    minHeight: "100vh",
     textAlign: "center",
-    backgroundColor: "#fff",
-    padding: "30px",
-    borderRadius: "10px",
-    boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)",
-  },
-  title: {
-    fontSize: "24px",
-    marginBottom: "20px",
-    color: "#444",
-  },
-  button: {
-    padding: "12px 24px",
-    fontSize: "18px",
-    cursor: "pointer",
-    backgroundColor: "#000",
-    color: "#fff",
-    border: "none",
-    borderRadius: "5px",
-    marginBottom: "20px",
+    backgroundColor: "#f7f7f7",
   },
   qrContainer: {
-    marginTop: "20px",
-  },
-  subtitle: {
-    fontSize: "20px",
-    marginBottom: "10px",
-    color: "#555",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
   },
   qrImage: {
     width: "200px",
     height: "200px",
     objectFit: "contain",
-    border: "2px solid #ccc",
-    borderRadius: "8px",
+    marginBottom: "10px",
+  },
+  amountContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#f1f1f1",
+    borderRadius: "10px",
+    padding: "8px 12px",
+    marginTop: "10px",
+    marginBottom: "10px",
+  },
+  currency: {
+    fontSize: "18px",
+    marginRight: "4px",
+  },
+  amount: {
+    fontSize: "18px",
+  },
+  clearButton: {
+    background: "transparent",
+    border: "none",
+    fontSize: "16px",
+    color: "#888",
+    cursor: "pointer",
+    marginLeft: "8px",
+  },
+  footerText: {
+    fontSize: "14px",
+    color: "#888",
+    maxWidth: "300px",
+    textAlign: "center",
+    marginTop: "10px",
+  },
+  generateButton: {
+    padding: "12px 24px",
+    fontSize: "16px",
+    cursor: "pointer",
+    backgroundColor: "#007bff",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
   },
 };
 
